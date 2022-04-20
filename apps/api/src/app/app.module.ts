@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BookModule } from './book/book.module';
 import { Book } from './database/entities/book.entity';
+import { AuthorModule } from './author/author.module';
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { Book } from './database/entities/book.entity';
 
         // Feature modules
         BookModule,
+        AuthorModule
     ],
     // providers: [BookService],
 })

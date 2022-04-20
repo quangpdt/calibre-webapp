@@ -1,7 +1,8 @@
 {
-  "version": 2,
-  "projects": {
-    "api": "apps/api",
-    "app": "apps/app"
-  }
+    "version": 2,
+    "projects": {
+        "api": "apps/api",
+        "app": "apps/app",
+        "datatype": "libs/datatype"
+    }
 }

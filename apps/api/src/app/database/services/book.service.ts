@@ -15,4 +15,19 @@ export class BookService {
             relations: ['comment'],
         });
     }
+
+    async count(): Promise<number> {
+        return this.bookRepository.count();
+    }
+
+    async findById(id: number): Promise<Book> {
+        return this.bookRepository.findOne(
+            {
+                id,
+            },
+            {
+                relations: ['comment'],
+            }
+        );
+    }
 }
