@@ -6,7 +6,7 @@ interface Props {
     total: number;
     onNext: MouseEventHandler;
     onPrev: MouseEventHandler;
-    pageLimit: number;
+    pageLimit?: number;
 }
 
 interface PageButtonProps {

@@ -1,8 +1,8 @@
 import { IsNumberString } from 'class-validator';
 
-export class FindBooksByAuthorParams {
+export class FindBookByObjectIdParams {
     @IsNumberString()
-    authorId: number;
+    id: number;
 
     @IsNumberString()
     page: number;

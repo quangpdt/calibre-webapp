@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Tag } from '../../../../../../libs/datatype/src/entity/tag.entitiy';
+import { Tag } from '@calibre-webapp/datatype';
 
 @Injectable()
 export class TagService {
@@ -18,5 +18,9 @@ export class TagService {
         return this.tagRepository.findOne({
             id,
         });
+    }
+
+    async findTags(): Promise<Tag[]> {
+        return this.tagRepository.find();
     }
 }

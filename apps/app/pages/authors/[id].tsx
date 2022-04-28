@@ -17,7 +17,7 @@ interface Props {
 
 const BooksByAuthor: NextPage<Props> = ({ bookData, page, authorId }) => {
     const router = useRouter();
-    console.log(router);
+
     const handleGoNext = () => {
         router.push({
             href: router.basePath,
@@ -53,10 +53,10 @@ export const loadBooksByAuthor = async (authorId: number, page: number) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params, query }) => {
-    const { authorId } = params;
+    const { id } = params;
     const page = isPositiveInt(query.page as string) ? parseInt(query.page as string, 10) : 1;
 
-    if (!isPositiveInt(authorId as string)) {
+    if (!isPositiveInt(id as string)) {
         return {
             redirect: {
                 destination: '/500',
@@ -64,12 +64,12 @@ export const getServerSideProps: GetServerSideProps = async ({ params, query }) 
             },
         };
     }
-    const authorIdInt = parseInt(authorId as string, 10);
+    const authorId = parseInt(id as string, 10);
 
-    const bookData = await loadBooksByAuthor(authorIdInt, page);
+    const bookData = await loadBooksByAuthor(authorId, page);
 
     return {
-        props: { bookData, page, authorId: authorIdInt },
+        props: { bookData, page, authorId },
     };
 };
 

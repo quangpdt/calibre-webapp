@@ -4,7 +4,7 @@ import { ResponseMessage } from '@calibre-webapp/datatype';
 import { FindOneParams } from '../shared/validators/find-one-params.validator';
 import { PaginationParams } from '../shared/validators/pagination-params.validator';
 import { BookService } from '../database/services/book.service';
-import { FindBooksByAuthorParams } from '../shared/validators/find-books-by-author-params.validator';
+import { FindBookByObjectIdParams } from '../shared/validators/find-books-by-author-params.validator';
 
 @Controller('authors')
 export class AuthorController {
@@ -51,10 +51,10 @@ export class AuthorController {
         };
     }
 
-    @Get(':authorId/books/:page/:limit')
-    public async findBooksByAuthorId(@Param() { authorId, page, limit }: FindBooksByAuthorParams): Promise<ResponseMessage> {
-        const books = await this.bookService.findBooksByAuthorId(authorId, page, limit);
-        const total = await this.bookService.countBooksByAuthorId(authorId);
+    @Get(':id/books/:page/:limit')
+    public async findBooksByAuthorId(@Param() { id, page, limit }: FindBookByObjectIdParams): Promise<ResponseMessage> {
+        const books = await this.bookService.findBooksByAuthorId(id, page, limit);
+        const total = await this.bookService.countBooksByAuthorId(id);
         return {
             code: 'SUCCEEDED',
             action: 'GET_BOOKS_BY_AUTHOR',

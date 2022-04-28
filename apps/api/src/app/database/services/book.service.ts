@@ -34,7 +34,27 @@ export class BookService {
         return this.bookRepository
             .createQueryBuilder('book')
             .leftJoinAndSelect('book.authors', 'authors')
+            .leftJoinAndSelect('book.tags', 'tags')
             .where('authors.id IN (:...authorId)', { authorId: [authorId] })
+            .getCount();
+    }
+
+    async findBooksByTagId(tagId: number, page: number, limit: number): Promise<Book[]> {
+        return this.bookRepository
+            .createQueryBuilder('book')
+            .leftJoinAndSelect('book.tags', 'tags')
+            .leftJoinAndSelect('book.authors', 'authors')
+            .where('tags.id IN (:...tagId)', { tagId: [tagId] })
+            .take(limit)
+            .skip((page - 1) * limit)
+            .getMany();
+    }
+
+    async countBooksByTagId(tagId: number): Promise<number> {
+        return this.bookRepository
+            .createQueryBuilder('book')
+            .leftJoinAndSelect('book.tags', 'tags')
+            .where('tags.id IN (:...tagId)', { tagId: [tagId] })
             .getCount();
     }
 
