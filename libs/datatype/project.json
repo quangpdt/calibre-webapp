@@ -9,14 +9,6 @@
             "options": {
                 "lintFilePatterns": ["libs/datatype/**/*.ts"]
             }
-        },
-        "test": {
-            "executor": "@nrwl/jest:jest",
-            "outputs": ["coverage/libs/datatype"],
-            "options": {
-                "jestConfig": "libs/datatype/jest.config.js",
-                "passWithNoTests": true
-            }
         }
     },
     "tags": []

@@ -1,18 +1,34 @@
 import { AppProps } from 'next/app';
-import Head from 'next/head';
 import './styles.css';
+import { ChakraProvider } from '@chakra-ui/react';
+import { theme } from '../theme/theme';
+import '@fontsource/montserrat';
+import { Swibc } from '../layouts/sidebar';
+import { NextPage } from 'next';
+import { ReactElement, ReactNode } from 'react';
 
-function CustomApp({ Component, pageProps }: AppProps) {
-  return (
-    <>
-      <Head>
-        <title>Welcome to app!</title>
-      </Head>
-      <main className="app">
-        <Component {...pageProps} />
-      </main>
-    </>
-  );
-}
+type NextPageWithLayout = NextPage & {
+    getLayout?: (page: ReactElement) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+    Component: NextPageWithLayout;
+};
+
+const CustomApp = ({ Component, pageProps }: AppPropsWithLayout): any => {
+    const getLayout = Component.getLayout;
+
+    if (getLayout) {
+        return getLayout(<Component {...pageProps} />);
+    }
+
+    return (
+        <ChakraProvider theme={theme}>
+            <Swibc>
+                <Component {...pageProps} />
+            </Swibc>
+        </ChakraProvider>
+    );
+};
 
 export default CustomApp;

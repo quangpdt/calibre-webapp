@@ -15,7 +15,8 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
-            "@calibre-webapp/datatype": ["libs/datatype/src/index.ts"]
+            "@calibre-webapp/datatype": ["libs/datatype/src/index.ts"],
+            "@calibre-webapp/validators": ["libs/validators/src/index.ts"]
         }
     },
     "exclude": ["node_modules", "tmp"]

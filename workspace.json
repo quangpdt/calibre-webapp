@@ -3,6 +3,7 @@
     "projects": {
         "api": "apps/api",
         "app": "apps/app",
-        "datatype": "libs/datatype"
+        "datatype": "libs/datatype",
+        "validators": "libs/validators"
     }
 }

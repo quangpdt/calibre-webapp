@@ -1,8 +1,9 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
 import { Author } from './author.entity';
 import { Publisher } from './publisher.entity';
 import { Tag } from './tag.entitiy';
 import { Comment } from './comment.entity';
+import { File } from './file.entity';
 
 @Entity({
     name: 'books',
@@ -14,6 +15,18 @@ export class Book {
     @Column()
     title: string;
 
+    @Column()
+    path: string;
+
+    @Column()
+    uuid: string;
+
+    @Column({name: 'author_sort'})
+    authorSort: string;
+
+    @Column({name: 'has_cover'})
+    hasCover: number;
+
     @Column({
         name: 'last_modified',
     })
@@ -21,6 +34,9 @@ export class Book {
 
     @OneToOne(() => Comment, (comment) => comment.book)
     comment: Comment;
+
+    @OneToMany(() => File, file => file.book)
+    files: File[];
 
     @ManyToMany(() => Author, (author) => author.books)
     @JoinTable({
