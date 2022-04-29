@@ -53,8 +53,7 @@ export class AuthorController {
 
     @Get(':id/books/:page/:limit')
     public async findBooksByAuthorId(@Param() { id, page, limit }: FindBookByObjectIdParams): Promise<ResponseMessage> {
-        const books = await this.bookService.findBooksByAuthorId(id, page, limit);
-        const total = await this.bookService.countBooksByAuthorId(id);
+        const [books, total] = await this.bookService.findBooksByAuthorId(id, page, limit);
         return {
             code: 'SUCCEEDED',
             action: 'GET_BOOKS_BY_AUTHOR',

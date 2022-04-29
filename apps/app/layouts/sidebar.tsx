@@ -1,6 +1,6 @@
 import { Avatar, Box, Drawer, DrawerContent, DrawerOverlay, Flex, Icon, IconButton, Input, InputGroup, InputLeftElement, Text, useDisclosure } from '@chakra-ui/react';
 import { ReactNode } from 'react';
-import { FaBeer, FaHome, FaPaw, FaTags, FaUsers } from 'react-icons/fa';
+import { FaBeer, FaHome, FaPaw, FaSearch, FaTags, FaUsers } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 import NextLink from 'next/link';
 
@@ -100,17 +100,16 @@ export const Swibc = ({ children }: { children: ReactNode }) => {
                 </DrawerContent>
             </Drawer>
             <Box ml={{ base: 0, md: 60 }} transition=".3s ease">
-                <Flex as="header" align="center" justify="space-between" w="full" px="4" bg="white" borderBottomWidth="1px" borderColor="inherit" h="14">
+                <Flex as="header" align="center" justify="space-between" w="full" px="4"  bg="white" borderBottomWidth="1px" borderColor="inherit" h="20">
                     <IconButton aria-label="Menu" display={{ base: 'inline-flex', md: 'none' }} onClick={sidebar.onOpen} icon={<FaBeer />} size="sm" />
-                    <InputGroup w="96" display={{ base: 'none', md: 'flex' }}>
+                    <InputGroup w="full" display={{ base: 'none', md: 'flex' }} size='lg'>
                         <InputLeftElement color="gray.500">
-                            <FaBeer />
+                            <FaSearch />
                         </InputLeftElement>
-                        <Input placeholder="Search for articles..." />
+                        <Input placeholder="Search for books"  />
                     </InputGroup>
 
                     <Flex align="center">
-                        <Icon color="gray.500" as={FaBeer} cursor="pointer" />
                         <Avatar ml="4" size="sm" name="anubra266" src="https://avatars.githubusercontent.com/u/30869823?v=4" cursor="pointer" />
                     </Flex>
                 </Flex>

@@ -1,39 +1,38 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ResponseMessage } from '@calibre-webapp/datatype';
-import { TagService } from '../database/services/tag.service';
-import { PaginationParams } from '../shared/validators/pagination-params.validator';
+import { PublisherService } from '../database/services/publisher.service';
 import { FindBookByObjectIdParams } from '../shared/validators/find-books-by-author-params.validator';
 import { BookService } from '../database/services/book.service';
 
-@Controller('tags')
-export class TagController {
-    constructor(private tagService: TagService, private bookService: BookService) {}
+@Controller('publishers')
+export class PublisherController {
+    constructor(private publisherService: PublisherService, private bookService: BookService) {}
 
     @Get('count')
     public async count(): Promise<ResponseMessage> {
         return {
             code: 'SUCCEEDED',
             action: 'COUNT_TAG',
-            data: await this.tagService.count(),
+            data: await this.publisherService.count(),
         };
     }
 
     @Get()
-    public async getTags(): Promise<ResponseMessage> {
-        const tags = await this.tagService.findTags();
+    public async getPublishers(): Promise<ResponseMessage> {
+        const publishers = await this.publisherService.findPublishers();
         return {
             code: 'SUCCEEDED',
             action: 'GET_AUTHORS',
             data: {
-                tags,
-                total: tags.length,
+                publishers,
+                total: publishers.length,
             },
         };
     }
 
     @Get(':id/books/:page/:limit')
     public async findBooksByAuthorId(@Param() { id, page, limit }: FindBookByObjectIdParams): Promise<ResponseMessage> {
-        const [books, total] = await this.bookService.findBooksByTagId(id, page, limit);
+        const [books, total] = await this.bookService.findBooksByPublisherId(id, page, limit);
         return {
             code: 'SUCCEEDED',
             action: 'GET_BOOKS_BY_AUTHOR',

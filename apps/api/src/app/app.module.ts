@@ -7,6 +7,7 @@ import { TagModule } from './tag/tag.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ResourceModule } from './resource/resouce.module';
 import { LibraryModule } from './library/library.module';
+import { PublisherModule } from './publisher/publisher.module';
 
 @Module({
     imports: [
@@ -29,6 +30,7 @@ import { LibraryModule } from './library/library.module';
         TagModule,
         ResourceModule,
         LibraryModule,
+        PublisherModule
     ],
     // providers: [BookService],
 })

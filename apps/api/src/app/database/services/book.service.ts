@@ -20,26 +20,17 @@ export class BookService {
         });
     }
 
-    async findBooksByAuthorId(authorId: number, page: number, limit: number): Promise<Book[]> {
+    async findBooksByAuthorId(authorId: number, page: number, limit: number): Promise<[Book[], number]> {
         return this.bookRepository
             .createQueryBuilder('book')
             .leftJoinAndSelect('book.authors', 'authors')
             .where('authors.id IN (:...authorId)', { authorId: [authorId] })
             .take(limit)
             .skip((page - 1) * limit)
-            .getMany();
+            .getManyAndCount();
     }
 
-    async countBooksByAuthorId(authorId: number): Promise<number> {
-        return this.bookRepository
-            .createQueryBuilder('book')
-            .leftJoinAndSelect('book.authors', 'authors')
-            .leftJoinAndSelect('book.tags', 'tags')
-            .where('authors.id IN (:...authorId)', { authorId: [authorId] })
-            .getCount();
-    }
-
-    async findBooksByTagId(tagId: number, page: number, limit: number): Promise<Book[]> {
+    async findBooksByTagId(tagId: number, page: number, limit: number): Promise<[Book[], number]> {
         return this.bookRepository
             .createQueryBuilder('book')
             .leftJoinAndSelect('book.tags', 'tags')
@@ -47,15 +38,18 @@ export class BookService {
             .where('tags.id IN (:...tagId)', { tagId: [tagId] })
             .take(limit)
             .skip((page - 1) * limit)
-            .getMany();
+            .getManyAndCount();
     }
 
-    async countBooksByTagId(tagId: number): Promise<number> {
+    async findBooksByPublisherId(publisherId: number, page: number, limit: number): Promise<[Book[], number]> {
         return this.bookRepository
             .createQueryBuilder('book')
-            .leftJoinAndSelect('book.tags', 'tags')
-            .where('tags.id IN (:...tagId)', { tagId: [tagId] })
-            .getCount();
+            .leftJoinAndSelect('book.publishers', 'publishers')
+            .leftJoinAndSelect('book.authors', 'authors')
+            .where('publishers.id IN (:...publisherId)', { publisherId: [publisherId] })
+            .take(limit)
+            .skip((page - 1) * limit)
+            .getManyAndCount();
     }
 
     async count(): Promise<number> {
