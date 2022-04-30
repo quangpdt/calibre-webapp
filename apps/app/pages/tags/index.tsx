@@ -4,16 +4,16 @@ import { NextPage } from 'next';
 import { TagGrid } from '../../components/tag-grid';
 import { Pagination } from '../../components/pagination';
 import { useRouter } from 'next/router';
+import { createApi } from '../../services/api-client';
 
 interface Props {
     tagData: {
         tags: Tag[];
         total: number;
     };
-    page: number;
 }
 
-const Tags: NextPage<Props> = ({ tagData, page }) => {
+const Tags: NextPage<Props> = ({ tagData }) => {
     return (
         <>
             <TagGrid tags={tagData.tags} />
@@ -21,20 +21,16 @@ const Tags: NextPage<Props> = ({ tagData, page }) => {
     );
 };
 
-export const loadTags = async (pageNumber: number) => {
-    const response = await fetch(`${apiUrl}/tags`);
-    const data = await response.json();
+export const loadTags = async () => {
+    const { data } = await createApi().get.tagList();
     return data.data;
 };
 
 export const getServerSideProps = async ({ query }) => {
-    const { page } = query;
-    const initialPage = page ? (isNaN(parseInt(page, 10)) ? 1 : parseInt(page, 10)) : 1;
-
-    const tagData = await loadTags(initialPage);
+    const tagData = await loadTags();
 
     return {
-        props: { tagData, page: initialPage },
+        props: { tagData },
     };
 };
 

@@ -18,6 +18,7 @@ import { PublisherModule } from './publisher/publisher.module';
             entities: [Book],
             synchronize: false,
             autoLoadEntities: true,
+            logging: true
         }),
         ServeStaticModule.forRoot({
             rootPath: process.env.CALIBRE_ROOT_PATH,

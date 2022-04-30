@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Author, Book } from '@calibre-webapp/datatype';
+import slugify from 'slugify';
 
 @Injectable()
 export class BookService {
@@ -65,5 +66,25 @@ export class BookService {
                 relations: ['comment', 'files'],
             }
         );
+    }
+
+    async searchBooks(term: string, config?: any) {
+        // term = slugify(term.trim().toLowerCase(), { replacement: ' ' });
+        const authorTerms = term.split(/[, ]+/).map((p) => `%${p}%`);
+
+        const queryBuilder = this.bookRepository
+            .createQueryBuilder('book')
+            .leftJoinAndSelect('book.tags', 'tags')
+            .leftJoinAndSelect('book.authors', 'authors');
+
+        authorTerms.forEach((authorTerm) => {
+            queryBuilder.where('LOWER(authors.name) LIKE :authorTerm', { authorTerm: '%nguyen%' });
+        });
+        // queryBuilder.where('LOWER(book.title) LIKE :term', { term });
+
+        return queryBuilder.getManyAndCount();
+
+        // for author_term in author_terms:
+        // q.append(Books.authors.any(func.lower(Authors.name).ilike("%" + author_term + "%")))
     }
 }

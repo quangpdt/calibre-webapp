@@ -5,6 +5,7 @@ import { Book } from '@calibre-webapp/datatype';
 import { Box, Button, Flex, Image, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { isPositiveInt } from '@calibre-webapp/validators';
+import { createApi } from '../../services/api-client';
 
 interface Props {
     book: Book;
@@ -45,8 +46,7 @@ const BookDetail: NextPage<Props> = ({ book }) => {
 };
 
 export const loadBookDetail = async (bookId: number) => {
-    const response = await fetch(`${apiUrl}/books/${bookId}`);
-    const data = await response.json();
+    const { data } = await createApi().get.bookDetail(bookId);
     return data.data;
 };
 

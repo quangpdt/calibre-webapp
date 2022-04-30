@@ -4,6 +4,7 @@ import { NextPage } from 'next';
 import { AuthorGrid } from '../../components/author-grid';
 import { Pagination } from '../../components/pagination';
 import { useRouter } from 'next/router';
+import { createApi } from '../../services/api-client';
 
 interface Props {
     authorData: {
@@ -42,8 +43,7 @@ const Authors: NextPage<Props> = ({ authorData, page }) => {
 };
 
 export const loadAuthors = async (pageNumber: number) => {
-    const response = await fetch(`${apiUrl}/authors/${pageNumber}/20`);
-    const data = await response.json();
+    const { data } = await createApi().get.authorList(pageNumber);
     return data.data;
 };
 

@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { BookGrid } from '../../components/book-grid';
 import { Pagination } from '../../components/pagination';
 import { isPositiveInt } from '@calibre-webapp/validators';
+import { createApi } from '../../services/api-client';
 
 interface Props {
     bookData: {
@@ -47,8 +48,7 @@ const BooksByTags: NextPage<Props> = ({ bookData, page, tagId }) => {
 };
 
 export const loadBooksByTag = async (tagId: number, page: number) => {
-    const response = await fetch(`${apiUrl}/tags/${tagId}/books/${page}/20`);
-    const data = await response.json();
+    const { data } = await createApi().get.bookListByTag(tagId, page);
     return data.data;
 };
 

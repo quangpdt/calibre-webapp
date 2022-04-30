@@ -2,6 +2,7 @@ import { apiUrl } from '../../constants';
 import { Publisher } from '@calibre-webapp/datatype';
 import { NextPage } from 'next';
 import { PublisherGrid } from '../../components/publisher-grid';
+import { createApi } from '../../services/api-client';
 
 interface Props {
     publisherData: {
@@ -20,8 +21,7 @@ const Publishers: NextPage<Props> = ({ publisherData, page }) => {
 };
 
 export const loadPublishers = async (pageNumber: number) => {
-    const response = await fetch(`${apiUrl}/publishers`);
-    const data = await response.json();
+    const { data } = await createApi().get.publisherList();
     return data.data;
 };
 

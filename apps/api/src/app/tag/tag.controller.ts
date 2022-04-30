@@ -18,7 +18,7 @@ export class TagController {
         };
     }
 
-    @Get()
+    @Get('list')
     public async getTags(): Promise<ResponseMessage> {
         const tags = await this.tagService.findTags();
         return {

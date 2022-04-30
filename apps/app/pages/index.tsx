@@ -5,6 +5,7 @@ import { BookGrid } from '../components/book-grid';
 import { Pagination } from '../components/pagination';
 import { useRouter } from 'next/router';
 import { isPositiveInt } from '@calibre-webapp/validators';
+import { apiClient, createApi } from '../services/api-client';
 
 interface Props {
     statistics: {
@@ -47,14 +48,12 @@ const Index: NextPage<Props> = ({ statistics, bookData, page }) => {
 };
 
 export const loadLibraryStatistics = async () => {
-    const response = await fetch(`${apiUrl}/library/statistics`);
-    const data = await response.json();
+    const { data } = await createApi().get.libraryStatistics();
     return data.data;
 };
 
 export const loadLatestBooks = async (pageNumber: number) => {
-    const response = await fetch(`${apiUrl}/books/${pageNumber}/20`);
-    const data = await response.json();
+    const { data } = await createApi().get.booksList(pageNumber);
     return data.data;
 };
 

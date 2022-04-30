@@ -17,7 +17,7 @@ export class PublisherController {
         };
     }
 
-    @Get()
+    @Get('list')
     public async getPublishers(): Promise<ResponseMessage> {
         const publishers = await this.publisherService.findPublishers();
         return {

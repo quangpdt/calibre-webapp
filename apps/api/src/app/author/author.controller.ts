@@ -19,7 +19,7 @@ export class AuthorController {
         };
     }
 
-    @Get(':page/:limit')
+    @Get('list/:page/:limit')
     public async getAuthors(@Param() { page, limit }: PaginationParams): Promise<ResponseMessage> {
         const authors = await this.authorService.findAuthors(page, limit);
         const total = await this.authorService.count();
